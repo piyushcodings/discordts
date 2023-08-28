@@ -19,7 +19,7 @@ logging.getLogger("pyrogram").setLevel(logging.WARNING)
 LOGS = logging.getLogger("LEGEND")
 
 bot = Client(
-    "bot",
+    "ironman",
     bot_token=bot_token,
     api_id=api_id,
     api_hash=api_hash,
