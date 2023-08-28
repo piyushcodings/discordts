@@ -612,7 +612,7 @@ async def account_login(bot: Client, m: Message):
             params1 = {
                 "page": f"{y}",
                 "tag": "",
-                "contentType": "exercises-notes-videos",
+                "contentType": "notes",
                 "ut": "",
             }
             response3 = requests.get(
