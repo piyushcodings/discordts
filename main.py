@@ -72,7 +72,7 @@ async def gaiyrab(bot: Client, message: Message):
                         path = recording_fields.get('path', {}).get('stringValue')
                         title = document_change.get('title', {}).get('stringValue')
                         to_write += f"{title}:{path}\n"
-                elif document_change.get('type', {}).get('stringValue') == "pdf":
+                if document_change.get('type', {}).get('stringValue') == "pdf":
                     title_pdf = document_change.get('title', {}).get('stringValue')
                     ref_pdf = document_change.get('ref', {}).get('stringValue')
                     to_write += f"{title_pdf}:{ref_pdf}\n"
