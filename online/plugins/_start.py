@@ -23,7 +23,7 @@ start_text = """
 ➭ 𝗣𝗿𝗲𝘀𝘀 /Khazana 𝗧𝗼 𝗘𝘅𝘁𝗿𝗮𝗰𝘁 𝗔𝗹𝗹 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗮𝗯𝗹𝗲 𝗟𝗶𝗻𝗸𝘀 𝗨𝘀𝗶𝗻𝗴 𝗔𝗨𝗧𝗛 𝗖𝗢𝗗𝗘 𝗞𝗛𝗔𝗭𝗔𝗡𝗔
 ▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰"""
 
-@bot.on_message(filters.command(["start"]))
+@Client.on_message(filters.command(["start"]))
 async def start(bot: Client, m: Message):
     if not one(m.from_user.id):
         return await m.reply_photo(
