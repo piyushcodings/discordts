@@ -78,7 +78,7 @@ async def gaiyrab(bot: Client, m: Message):
     except Exception as e:
         os.remove(x)
         return await m.reply_text(f"**Error** : {e}")
-   with open(f"new.txt", "w", encoding="utf-8") as f:
+    with open(f"new.txt", "w", encoding="utf-8") as f:
         f.write(to_write)
         print(1)
     with open(f"new.txt", "rb") as f:
