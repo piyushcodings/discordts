@@ -16,6 +16,7 @@ from pyrogram.errors import ChatAdminRequired, UserNotParticipant, ChatWriteForb
 from online.helpers.vid import *
 from online.helpers.button import keyboard
 from online.helpers.sudoers import *
+from online.helpers.text import *
 from online.Config import *
 
 #==========Logging==========#
