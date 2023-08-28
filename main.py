@@ -18,6 +18,7 @@ from online.helpers.button import keyboard
 from online.helpers.sudoers import *
 from online.helpers.text import *
 from online.Config import *
+import json
 
 #==========Logging==========#
 logging.basicConfig(
@@ -40,7 +41,51 @@ bot = Client(
     api_hash=api_hash,
 )
 
+#========== Converter =============#
+@bot.on_message(filters.command(["taiyariconverter"]))
+async def gaiyrab(bot: Client, m: Message):
+    user = m.from_user.id if m.from_user is not None else None
+    if not one(m.from_user.id):
+        return await m.reply_text(
+            "✨ Hello Sir,\n\nContact Me Click Below",
+            reply_markup=keyboard,
+        )
+    else:
+        editable = await m.reply_text("Send me json file and i will convert into text", disable_web_page_preview=True)
+    input = await bot.listen(editable.chat.id)
+    x = await input.download()
+    to_write = ""
+    try:
+        with open(x, "r") as file:
+            data = json.load(file)
+            for entry in data:
+                target_change = entry[1][0].get('targetChange')
+                if target_change and target_change.get('targetChangeType') == 'ADD':
+                    document_change = entry[1][0].get('documentChange', {}).get('document', {}).get('fields', {})
+                    quality = None
+                    recordings = document_change.get('recordings', {}).get('arrayValue', {}).get('values', [])
+                    for recording in recordings:
+                        recording_fields = recording.get('mapValue', {}).get('fields', {})
+                        quality = recording_fields.get('quality', {}).get('stringValue')
+                        if quality == "480p":
+                            path = recording_fields.get('path', {}).get('stringValue')
+                            title = document_change.get('title', {}).get('stringValue')
+                            to_write += f"{title}:{path}"
+                elif document_change.get('type', {}).get('stringValue') == "pdf":
+                    title_pdf = document_change.get('title', {}).get('stringValue')
+                    ref_pdf = document_change.get('ref', {}).get('stringValue')
+                    to_write += f"{title_pdf}:{ref_pdf}"
+    except Exception as e:
+        os.remove(x)
+        return await m.reply_text(f"**Error** : {e}")
+   with open(f"new.txt", "w", encoding="utf-8") as f:
+        f.write(to_write)
+        print(1)
+    with open(f"new.txt", "rb") as f:
+        await asyncio.sleep(5)
+        doc = await message.reply_document(document=f, caption="Here is your txt file.")
 #=========== Core Commands ======#
+
 shell_usage = f"**USAGE:** Executes terminal commands directly via bot.\n\n<pre>/shell pip install requests</pre>"
 
 @bot.on_message(filters.command(["shell"]))
@@ -123,7 +168,7 @@ async def restart_handler(_, m):
 
 # ============ Download Commands ==============#
 @bot.on_message(filters.command(["pyro"]))
-async def account_login(bot: Client, m: Message):
+async def download_pw(bot: Client, m: Message):
     global cancel
     user = m.from_user.id if m.from_user is not None else None
     if not one(m.from_user.id):
