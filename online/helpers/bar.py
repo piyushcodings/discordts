@@ -2,7 +2,7 @@ import time
 
 from pyrogram.errors import FloodWait
 
-from timers import hrb
+from .timers import hrb
 
 
 class Timer:
