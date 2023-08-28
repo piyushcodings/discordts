@@ -13,7 +13,7 @@ from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from pyrogram.errors import ChatAdminRequired, UserNotParticipant, ChatWriteForbidden
-from online.helpers.vid import *
+import online.helpers.vid as helper
 from online.helpers.button import keyboard
 from online.helpers.sudoers import *
 from online.helpers.text import *
