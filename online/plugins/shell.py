@@ -1,7 +1,7 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
 from online.helpers.sudoers import two
-
+import subrpocess
 shell_usage = f"**USAGE:** Executes terminal commands directly via bot.\n\n<pre>/shell pip install requests</pre>"
 
 @Client.on_message(filters.command(["shell"]))
