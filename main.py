@@ -1690,7 +1690,7 @@ async def account_login(bot: Client, m: Message):
         await m.reply_text(e)
     await m.reply_text("Done")
 
-
+"""
 @bot.on_message(filters.command(["top"]))
 async def account_login(bot: Client, m: Message):
     user = m.from_user.id if m.from_user is not None else None
@@ -1805,12 +1805,12 @@ async def account_login(bot: Client, m: Message):
                     thumbnail = f"{filename}.jpg"
                 else:
                     thumbnail = thumb
-                except Exception as e:
-                    await m.reply_text(str(e))
+            except Exception as e:
+                await m.reply_text(str(e))
 
-                dur = int(helper.duration(filename))
+            dur = int(helper.duration(filename))
 
-                start_time = time.time()
+            start_time = time.time()
 
                 await m.reply_video(f"{name}.mp4",supports_streaming=True,height=720,width=1280,caption=cc,duration=dur,thumb=thumbnail, progress=progress_bar,progress_args=(reply,start_time) )
                 count+=1
@@ -1826,6 +1826,6 @@ async def account_login(bot: Client, m: Message):
     except Exception as e:
         await m.reply_text(str(e))
     await m.reply_text("Done") 
-
+"""
 
 bot.run()
