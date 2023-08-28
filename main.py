@@ -7,17 +7,18 @@ import subprocess
 import sys
 import time
 from logging.handlers import RotatingFileHandler
-
 from subprocess import getstatusoutput
-
 import requests
 from pyrogram import Client, filters
 from pyrogram.errors import FloodWait
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, Message
 from pyrogram.errors import ChatAdminRequired, UserNotParticipant, ChatWriteForbidden
+from online.helpers.vid import *
+from online.helpers.button import keyboard
+from online.helpers.sudoers import *
+from online.Config import *
 
-import helper
-
+#==========Logging==========#
 logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s - %(levelname)s - %(message)s [%(filename)s:%(lineno)d]",
@@ -28,62 +29,18 @@ logging.basicConfig(
     ],
 )
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
-
-
 logging = logging.getLogger()
 
-
+#=========== Client ===========#
 bot = Client(
     "bot",
-    bot_token="6543084771:AAEC1-GFgl0LXWr3eCj3GrmesuLd1ArkQOg",
-    api_id=3748059,
-    api_hash="f8c9df448f3ba20a900bc2ffc8dae9d5",
+    bot_token=bot_token,
+    api_id=api_id,
+    api_hash=api_hash,
 )
-auth_users = "1993514215,5591734243,1369808729"
-sudo_users = [int(num) for num in auth_users.split(",")]
 
-osowner_users = "1993514215,5591734243,1369808729"
-owner_users = [int(num) for num in osowner_users.split(",")]
-
+#=========== Core Commands ======#
 shell_usage = f"**USAGE:** Executes terminal commands directly via bot.\n\n<pre>/shell pip install requests</pre>"
-
-
-def one(user_id):
-    if user_id in sudo_users:
-        return True
-    return False
-
-def two(user_id):
-    if user_id in owner_users:
-        return True
-    return False
-
-start_text = """
-▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰
-𝙏𝙓𝙏 𝙁𝙞𝙡𝙚 𝘿𝙤𝙬𝙣𝙡𝙤𝙖𝙙𝙚𝙧 𝘼𝙣𝙙 𝙀𝙭𝙩𝙧𝙖𝙘𝙩𝙤𝙧 𝘽𝙤𝙩.
-▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰
-
-➭ 𝗣𝗿𝗲𝘀𝘀 /Pyro 𝗧𝗼 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱 𝗟𝗶𝗻𝗸𝘀 𝗟𝗶𝘀𝘁𝗲𝗱. 𝗦𝗲𝗻𝗱 𝗧𝗫𝗧 𝗙𝗶𝗹𝗲 𝗙𝗢𝗥𝗠𝗔𝗧 {𝗙𝗶𝗹𝗲𝗡𝗮𝗺𝗲 : 𝗙𝗶𝗹𝗲𝗟𝗶𝗻𝗸}
-
-➭ 𝗣𝗿𝗲𝘀𝘀 /Cancel 𝗧𝗼 𝗖𝗮𝗻𝗰𝗲𝗹 𝗔𝗹𝗹 𝗧𝗵𝗲 𝗥𝘂𝗻𝗻𝗶𝗻𝗴 𝗧𝗮𝘀𝗸𝘀 𝗢𝗻 𝗕𝗼𝘁.
-
-➭ 𝗣𝗿𝗲𝘀𝘀 /Restart 𝗧𝗼 𝗥𝗲𝘀𝘁𝗮𝗿𝘁 𝗧𝗵𝗲 𝗕𝗼𝘁.
-
-➭ 𝗣𝗿𝗲𝘀𝘀 /PW 𝗧𝗼 𝗘𝘅𝘁𝗿𝗮𝗰𝘁 𝗔𝗹𝗹 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗮𝗯𝗹𝗲 𝗟𝗶𝗻𝗸𝘀 𝗨𝘀𝗶𝗻𝗴 𝗔𝗨𝗧𝗛 𝗖𝗢𝗗𝗘
-
-➭ 𝗣𝗿𝗲𝘀𝘀 /Apni 𝗧𝗼 𝗘𝘅𝘁𝗿𝗮𝗰𝘁 𝗔𝗹𝗹 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗮𝗯𝗹𝗲 𝗟𝗶𝗻𝗸𝘀 𝗼𝗳 𝗔𝗽𝗻𝗶 𝗞𝗮𝗸𝘀𝗵𝗮 𝗨𝘀𝗶𝗻𝗴 𝗧𝗼𝗸𝗲𝗻
-
-➭ 𝗣𝗿𝗲𝘀𝘀 /Logink 𝗧𝗼 𝗘𝘅𝘁𝗿𝗮𝗰𝘁 𝗔𝗹𝗹 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗮𝗯𝗹𝗲 𝗟𝗶𝗻𝗸𝘀 𝗼𝗳 𝗞𝗵𝗮𝗻 𝗦𝗶𝗿 𝗨𝘀𝗶𝗻𝗴 𝗔𝗨𝗧𝗛 𝗖𝗢𝗗𝗘
-
-➭ 𝗣𝗿𝗲𝘀𝘀 /Khazana 𝗧𝗼 𝗘𝘅𝘁𝗿𝗮𝗰𝘁 𝗔𝗹𝗹 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗮𝗯𝗹𝗲 𝗟𝗶𝗻𝗸𝘀 𝗨𝘀𝗶𝗻𝗴 𝗔𝗨𝗧𝗛 𝗖𝗢𝗗𝗘 𝗞𝗛𝗔𝗭𝗔𝗡𝗔
-▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰"""
-
-pyro_text = """➭ 𝗜 𝗔𝗺 𝗧𝗵𝗲 𝗙𝗮𝘀𝘁𝗲𝘀𝘁 𝗔𝗻𝗱 𝗦𝗺𝗼𝗼𝘁𝗵𝗲𝘀𝘁 𝗕𝗼𝘁 𝗢𝗻 𝗧𝗲𝗹𝗲𝗴𝗿𝗮𝗺 𝗧𝗼 𝗨𝗣𝗟𝗢𝗔𝗗 𝗧𝘅𝘁 𝗙𝗶𝗹𝗲𝘀 𝗧𝗼 𝗩𝗶𝗱𝗲𝗼𝘀 𝗢𝗻 𝗧𝗲𝗹𝗲𝗴𝗿𝗮𝗺
-
-➭ 𝗦𝗲𝗻𝗱 : 𝗧𝗫𝗧 (.𝘁𝘅𝘁) 𝗙𝗶𝗹𝗲
-➭ 𝗙𝗼𝗿𝗺𝗮𝘁 : {𝗙𝗶𝗹𝗲𝗻𝗮𝗺𝗲:𝗙𝗶𝗹𝗲𝗟𝗶𝗻𝗸}
-
-➭ 𝗗𝗲𝘃𝗲𝗹𝗼𝗽𝗲𝗱 𝗕𝘆 : [𝗟𝗲𝗴𝗲𝗻𝗱𝗕𝗼𝘆](https://t.me/LegendBoy_OP) 𝗔𝗻𝗱 [𝗟𝘂𝗰𝗸𝘆𝗥𝗮𝗷𝗽𝘂𝘁](https://t.me/LuckyRajputOfficial)"""
 
 @bot.on_message(filters.command(["shell"]))
 async def shell(client, message: Message):
@@ -118,23 +75,7 @@ async def shell(client, message: Message):
     else:
         await message.reply_text(f"**Output:**:\n\n{result}", quote=True)
 
-
-keyboard = InlineKeyboardMarkup(
-    [
-        [
-            InlineKeyboardButton(
-                text="Devloper",
-                url="https://t.me/LegendBoy_OP",
-            ),
-            InlineKeyboardButton(
-                text="About Me",
-                url="https://t.me/LegendBot_AI/475",
-            ),
-        ],
-    ]
-)
-
-
+#============== Start Commands ==========#
 @bot.on_message(filters.command(["start"]))
 async def account_login(bot: Client, m: Message):
     if not one(m.from_user.id):
@@ -144,6 +85,7 @@ async def account_login(bot: Client, m: Message):
         )
     editable = await m.reply_text(start_text)
 
+# ========== Global Concel Command ============
 cancel = False
 @bot.on_message(filters.command(["cancel"]))
 async def cancel(_, m):
@@ -160,7 +102,7 @@ async def cancel(_, m):
     await editable.edit("cancelled all")
     return
 
-
+# ============== Power Commands =================
 @bot.on_message(filters.command("restart"))
 async def restart_handler(_, m):
     if not two(m.from_user.id):
@@ -171,7 +113,7 @@ async def restart_handler(_, m):
     await m.reply_text("➭ 𝗕𝗼𝘁 𝗜𝘀 𝗕𝗲𝗶𝗻𝗴 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴. 𝗣𝗹𝗲𝗮𝘀𝗲 𝗞𝗲𝗲𝗽 𝗣𝗮𝘁𝗶𝗲𝗻𝗰𝗲", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
-
+# ============ Download Commands ==============#
 @bot.on_message(filters.command(["pyro"]))
 async def account_login(bot: Client, m: Message):
     global cancel
@@ -491,6 +433,8 @@ async def account_login(bot: Client, m: Message):
         return await m.reply_text(f"Overall Error : {e}")
     await m.reply_text("Done")
 
+
+#================ Physics Wallah Commands ===============#
 @bot.on_message(filters.command(["infopw"]))
 async def account_login(bot: Client, m: Message):
     if not one(m.from_user.id):
@@ -985,7 +929,7 @@ async def account_login(bot: Client, m: Message):
         await asyncio.sleep(5)
         doc = await m.reply_document(document=f, caption="Here is your txt file.")
 
-                     
+# =============== Apni Kaksha =================     #                
 
 @bot.on_message(filters.command(["apni"]))
 async def account_login(bot: Client, m: Message):
@@ -1060,9 +1004,9 @@ async def account_login(bot: Client, m: Message):
         await asyncio.sleep(5)
         return await m.reply_document(document=f, caption="Here is your txt file.")
     
- 
+# ============= Khan Sir ==============#
 
-@bot.on_message(filters.command(["logink"]))
+@bot.on_message(filters.command(["khan"]))
 async def account_login(bot: Client, m: Message):
     if not one(m.from_user.id):
         return await m.reply_text(
@@ -1227,6 +1171,8 @@ async def account_login(bot: Client, m: Message):
         await asyncio.sleep(5)
         doc = await message.reply_document(document=f, caption="Here is your txt file.")
 
+#
+
 
 @bot.on_message(filters.command(["adownload"]))
 async def account_login(bot: Client, m: Message):
@@ -1248,7 +1194,6 @@ async def account_login(bot: Client, m: Message):
         with open(x, "r") as f:
             content = f.readlines()
         os.remove(x)
-        # print(len(links))
     except:
         await m.reply_text("Invalid file input.")
         os.remove(x)
@@ -1856,9 +1801,6 @@ async def account_login(bot: Client, m: Message):
                 os.system(download_cmd)
                 filename = f"{name}.mp4"
                 subprocess.run(f'ffmpeg -i "{filename}" -ss 00:01:00 -vframes 1 "{filename}.jpg"', shell=True)
-                await prog.delete (True)
-                reply = await m.reply_text(f"Uploading - ```{name}```")
-                try:
                     if thumb == "no":
                         thumbnail = f"{filename}.jpg"
                     else:
@@ -1884,7 +1826,6 @@ async def account_login(bot: Client, m: Message):
     except Exception as e:
         await m.reply_text(str(e))
     await m.reply_text("Done") 
- 
-"""
+
 
 bot.run()
