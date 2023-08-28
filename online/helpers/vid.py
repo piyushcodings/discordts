@@ -11,7 +11,7 @@ import requests
 from pyrogram import Client
 from pyrogram.types import Message
 
-from bar import progress_bar
+from .bar import progress_bar
 
 
 def duration(filename):
