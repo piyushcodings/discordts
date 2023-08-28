@@ -11,3 +11,5 @@ pycurl
 humanize
 cryptg
 python-decouple
+python-dotenv[cli]
+python-dotenv
