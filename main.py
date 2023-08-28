@@ -43,15 +43,15 @@ bot = Client(
 
 #========== Converter =============#
 @bot.on_message(filters.command(["taiyariconverter"]))
-async def gaiyrab(bot: Client, m: Message):
-    user = m.from_user.id if m.from_user is not None else None
+async def gaiyrab(bot: Client, message: Message):
+    user = message.from_user.id if message.from_user is not None else None
     if not one(m.from_user.id):
-        return await m.reply_text(
+        return await message.reply_text(
             "✨ Hello Sir,\n\nContact Me Click Below",
             reply_markup=keyboard,
         )
     else:
-        editable = await m.reply_text("Send me json file and i will convert into text", disable_web_page_preview=True)
+        editable = await message.reply_text("Send me json file and i will convert into text", disable_web_page_preview=True)
     input = await bot.listen(editable.chat.id)
     x = await input.download()
     to_write = ""
@@ -78,7 +78,7 @@ async def gaiyrab(bot: Client, m: Message):
                     to_write += f"{title_pdf}:{ref_pdf}"
     except Exception as e:
         os.remove(x)
-        return await m.reply_text(f"**Error** : {e}")
+        return await message.reply_text(f"**Error** : {e}")
     with open(f"new.txt", "w", encoding="utf-8") as f:
         f.write(to_write)
         print(1)
