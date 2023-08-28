@@ -76,13 +76,21 @@ async def shell(client, message: Message):
     else:
         await message.reply_text(f"**Output:**:\n\n{result}", quote=True)
 
+paid_text = """
+» Hello i am online class bot which help you to **Extract** and **Download** video of Physics Wallah / Apni Kaksha / Khan Gs ..... Any Type of Online Class Which You Want.
+• **How to Access this bot**
+
+Step 1: Click Below on Developer.
+Step 2: Go to Telegram Username
+Step 3: Send your Telegram ID From @missrose_bot
+"""
+
 #============== Start Commands ==========#
 @bot.on_message(filters.command(["start"]))
 async def account_login(bot: Client, m: Message):
     if not one(m.from_user.id):
         return await m.reply_photo(
-            photo="https://graph.org/file/f60051408d17fd505fa11.jpg", caption=f"» Hello i am online class bot which help you to **Extract** and **Download** video of Physics Wallah / Apni Kaksha / Khan Gs\n\n• __This Bot is paid__\n\n**For 1 Month** : __Rs 99__\n**For 2 Month** : __Rs 149__\n\n**If you want to Buy Source Code ** \n__Contact Now__",
-            reply_markup=keyboard,
+            photo="https://graph.org/file/f60051408d17fd505fa11.jpg", caption=paid_text, reply_markup=keyboard,
         )
     editable = await m.reply_text(start_text)
 
@@ -90,9 +98,9 @@ async def account_login(bot: Client, m: Message):
 cancel = False
 @bot.on_message(filters.command(["cancel"]))
 async def cancel(_, m):
-    if not one(m.from_user.id):
+    if not two(m.from_user.id):
         return await m.reply_text(
-            "✨ Hello Sir,\n\nContact Me Click Below",
+            "✨ Hello Sir,\n\nThis Command is only For Owner",
             reply_markup=keyboard,
         )
     editable = await m.reply_text(
@@ -110,7 +118,6 @@ async def restart_handler(_, m):
         return await m.reply_text(
             "✨ Hello Sir,\n\nYou Don't Have Right To Access This Contact Owner",
         )
-
     await m.reply_text("➭ 𝗕𝗼𝘁 𝗜𝘀 𝗕𝗲𝗶𝗻𝗴 𝗥𝗲𝘀𝘁𝗮𝗿𝘁𝗶𝗻𝗴. 𝗣𝗹𝗲𝗮𝘀𝗲 𝗞𝗲𝗲𝗽 𝗣𝗮𝘁𝗶𝗲𝗻𝗰𝗲", True)
     os.execl(sys.executable, sys.executable, *sys.argv)
 
