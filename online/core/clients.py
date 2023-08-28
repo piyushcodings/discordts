@@ -15,7 +15,7 @@ logging.basicConfig(
 logging.getLogger("pyrogram").setLevel(logging.WARNING)
 
 
-logging = logging.getLogger()
+LOGS = logging.getLogger("LEGEND")
 
 bot = Client(
     "bot",
