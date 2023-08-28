@@ -1801,10 +1801,10 @@ async def account_login(bot: Client, m: Message):
                 os.system(download_cmd)
                 filename = f"{name}.mp4"
                 subprocess.run(f'ffmpeg -i "{filename}" -ss 00:01:00 -vframes 1 "{filename}.jpg"', shell=True)
-                    if thumb == "no":
-                        thumbnail = f"{filename}.jpg"
-                    else:
-                        thumbnail = thumb
+                if thumb == "no":
+                    thumbnail = f"{filename}.jpg"
+                else:
+                    thumbnail = thumb
                 except Exception as e:
                     await m.reply_text(str(e))
 
