@@ -2,6 +2,7 @@ from pyrogram import Client
 from online.Config import *
 from pyromod import listen
 import logging
+from logging.handlers import RotatingFileHandler
 
 logging.basicConfig(
     level=logging.DEBUG,
