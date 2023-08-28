@@ -23,5 +23,5 @@ bot = Client(
     bot_token=bot_token,
     api_id=api_id,
     api_hash=api_hash,
-    plugins=dict(root="online.plugins")
+    plugins=dict(root="online/plugins")
 )
