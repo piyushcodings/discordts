@@ -42,7 +42,7 @@ bot = Client(
 )
 
 #========== Converter =============#
-@bot.on_message(filters.command(["taiyariconverter"]))
+@bot.on_message(filters.command(["taiyaric"]))
 async def gaiyrab(bot: Client, message: Message):
     user = message.from_user.id if message.from_user is not None else None
     if not one(message.from_user.id):
@@ -71,11 +71,11 @@ async def gaiyrab(bot: Client, message: Message):
                     if quality == "480p":
                         path = recording_fields.get('path', {}).get('stringValue')
                         title = document_change.get('title', {}).get('stringValue')
-                        to_write += f"{title}:{path}"
-                if document_change.get('type', {}).get('stringValue') == "pdf":
+                        to_write += f"{title}:{path}\n"
+                elif document_change.get('type', {}).get('stringValue') == "pdf":
                     title_pdf = document_change.get('title', {}).get('stringValue')
                     ref_pdf = document_change.get('ref', {}).get('stringValue')
-                    to_write += f"{title_pdf}:{ref_pdf}"
+                    to_write += f"{title_pdf}:{ref_pdf}\n"
     except Exception as e:
         os.remove(x)
         return await message.reply_text(f"**Error** : {e}")
