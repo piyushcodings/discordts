@@ -1,6 +1,6 @@
 from online.core.clients import bot
-from helpers.sudoers import one
-from helpers.button import keyboard
+from online.helpers.sudoers import one
+from online.helpers.button import keyboard
 from pyrogram import Client
 
 start_text = """
