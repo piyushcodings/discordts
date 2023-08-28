@@ -51,7 +51,7 @@ async def gaiyrab(bot: Client, message: Message):
             reply_markup=keyboard,
         )
     else:
-        editable = await message.reply_text("Send me json file and i will convert into text", disable_web_page_preview=True)
+        editable = await message.reply_text("This is help to convert json file to text of taiyari karlo app ", disable_web_page_preview=True)
     input = await bot.listen(editable.chat.id)
     x = await input.download()
     to_write = ""
