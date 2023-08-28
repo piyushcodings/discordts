@@ -25,7 +25,7 @@ start_text = """
 ▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰"""
 
 @Client.on_message(filters.command(["start"]))
-async def starts_op(m: Message):
+async def starts_op(bot: Client, m: Message):
     if not one(m.from_user.id):
         return await m.reply_photo(
             photo="https://graph.org/file/f60051408d17fd505fa11.jpg", caption=f"» Hello i am online class bot which help you to **Extract** and **Download** video of Physics Wallah / Apni Kaksha / Khan Gs\n\n• __This Bot is paid__\n\n**For 1 Month** : __Rs 99__\n**For 2 Month** : __Rs 149__\n\n**If you want to Buy Source Code ** \n__Contact Now__",
