@@ -1,8 +1,9 @@
-from online.core.clients import bot
+
 from online.helpers.sudoers import one
 from online.helpers.button import keyboard
 from pyrogram import Client, filters
 from pyrogram.types import Message
+
 start_text = """
 ▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰
 𝙏𝙓𝙏 𝙁𝙞𝙡𝙚 𝘿𝙤𝙬𝙣𝙡𝙤𝙖𝙙𝙚𝙧 𝘼𝙣𝙙 𝙀𝙭𝙩𝙧𝙖𝙘𝙩𝙤𝙧 𝘽𝙤𝙩.
@@ -24,10 +25,10 @@ start_text = """
 ▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰"""
 
 @Client.on_message(filters.command(["start"]))
-async def start(bot: Client, m: Message):
+async def starts_op(m: Message):
     if not one(m.from_user.id):
         return await m.reply_photo(
             photo="https://graph.org/file/f60051408d17fd505fa11.jpg", caption=f"» Hello i am online class bot which help you to **Extract** and **Download** video of Physics Wallah / Apni Kaksha / Khan Gs\n\n• __This Bot is paid__\n\n**For 1 Month** : __Rs 99__\n**For 2 Month** : __Rs 149__\n\n**If you want to Buy Source Code ** \n__Contact Now__",
             reply_markup=keyboard,
         )
-    await m.reply_text(start_text)
+    return await m.reply_text(start_text)
