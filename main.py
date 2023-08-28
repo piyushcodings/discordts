@@ -61,17 +61,18 @@ async def gaiyrab(bot: Client, m: Message):
             for entry in data:
                 target_change = entry[1][0].get('targetChange')
                 if target_change and target_change.get('targetChangeType') == 'ADD':
-                    document_change = entry[1][0].get('documentChange', {}).get('document', {}).get('fields', {})
-                    quality = None
-                    recordings = document_change.get('recordings', {}).get('arrayValue', {}).get('values', [])
-                    for recording in recordings:
-                        recording_fields = recording.get('mapValue', {}).get('fields', {})
-                        quality = recording_fields.get('quality', {}).get('stringValue')
-                        if quality == "480p":
-                            path = recording_fields.get('path', {}).get('stringValue')
-                            title = document_change.get('title', {}).get('stringValue')
-                            to_write += f"{title}:{path}"
-                elif document_change.get('type', {}).get('stringValue') == "pdf":
+                    continue
+                document_change = entry[1][0].get('documentChange', {}).get('document', {}).get('fields', {})
+                quality = None
+                recordings = document_change.get('recordings', {}).get('arrayValue', {}).get('values', [])
+                for recording in recordings:
+                    recording_fields = recording.get('mapValue', {}).get('fields', {})
+                    quality = recording_fields.get('quality', {}).get('stringValue')
+                    if quality == "480p":
+                        path = recording_fields.get('path', {}).get('stringValue')
+                        title = document_change.get('title', {}).get('stringValue')
+                        to_write += f"{title}:{path}"
+                if document_change.get('type', {}).get('stringValue') == "pdf":
                     title_pdf = document_change.get('title', {}).get('stringValue')
                     ref_pdf = document_change.get('ref', {}).get('stringValue')
                     to_write += f"{title_pdf}:{ref_pdf}"
