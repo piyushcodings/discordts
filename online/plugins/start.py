@@ -2,7 +2,7 @@ from online.core.clients import bot
 from online.helpers.sudoers import one
 from online.helpers.button import keyboard
 from pyrogram import Client, filters
-
+from pyrogram.types import Message
 start_text = """
 ▰▱▱▱▱▱▱▱▱▱▱▱▱▱▱▰
 𝙏𝙓𝙏 𝙁𝙞𝙡𝙚 𝘿𝙤𝙬𝙣𝙡𝙤𝙖𝙙𝙚𝙧 𝘼𝙣𝙙 𝙀𝙭𝙩𝙧𝙖𝙘𝙩𝙤𝙧 𝘽𝙤𝙩.
