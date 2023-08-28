@@ -1,4 +1,4 @@
-from core.clients import bot
+from online.core.clients import bot
 from helpers.sudoers import one
 from helpers.button import keyboard
 from pyrogram import Client
