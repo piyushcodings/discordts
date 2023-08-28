@@ -1,6 +1,6 @@
 from pyrogram import Client, filters
 from pyrogram.types import Message
-
+from online.helpers.sudoers import two
 
 shell_usage = f"**USAGE:** Executes terminal commands directly via bot.\n\n<pre>/shell pip install requests</pre>"
 
@@ -9,7 +9,7 @@ async def shell(client: Client, message: Message):
     """
     Executes terminal commands via bot.
     """
-    if not one(message.from_user.id):
+    if not two(message.from_user.id):
         return
 
     if len(message.command) < 2:
