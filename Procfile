@@ -1,1 +1,1 @@
-worker: python3 -m online
+worker: python3 main.py
