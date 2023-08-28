@@ -45,7 +45,7 @@ bot = Client(
 @bot.on_message(filters.command(["taiyariconverter"]))
 async def gaiyrab(bot: Client, message: Message):
     user = message.from_user.id if message.from_user is not None else None
-    if not one(m.from_user.id):
+    if not one(message.from_user.id):
         return await message.reply_text(
             "✨ Hello Sir,\n\nContact Me Click Below",
             reply_markup=keyboard,
