@@ -842,7 +842,6 @@ async def account_login(bot: Client, m: Message):
     input2 = await bot.listen(editable.chat.id)
     subject_idid = input2.text 
 	
-
     response3 = requests.get(
         f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters", headers=headers, params=params2
     ).json()["data"]
@@ -861,27 +860,26 @@ async def account_login(bot: Client, m: Message):
     is_check = input4.text
 
     response4 = requests.get(
-        f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics", headers=headers, params=params2
+        f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics", headers=headers
     ).json()["data"]
     to_write = ""
     for data2 in response4:
         topic_id = data2["_id"]
         response5 = requests.get(
-            f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics/{topic_id}/contents/sub-topic", headers=headers, params=params2
+            f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics/{topic_id}/contents/sub-topic", headers=headers
         ).json()["data"]     
         for data3 in response5:
             subtopic_name = data3["name"]
             subtopic_id = data3["_id"]
+            params4 = {
+                "type": "",
+                "programId": f"{raw_text2}",
+                "subjectId": f"{subject_idid}", 
+                "chapterId": f"{teacher_idid}", 
+                "topicId": f"{topic_id}",
+                "subTopicId": f"{subtopic_id}",
+	    }
             if subtopic_name.startswith("Lectures") and is_check == "Lectures":
-                params4 = {
-                    "type": "",
-                    "programId": f"{raw_text2}",
-                    "subjectId": f"{subject_idid}", 
-                    "chapterId": f"{teacher_idid}", 
-                    "topicId": f"{topic_id}",
-                    "page": "1",
-                    "subTopicId": f"{subtopic_id}",
-                }
                 response6 = requests.get(
                     f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
                 ).json()["data"]
@@ -901,15 +899,6 @@ async def account_login(bot: Client, m: Message):
                     thumb_url = a["image"]
                     to_write += f"{name}:{url}:{thumb_url}\n"
             elif subtopic_name.startswith("Notes") and is_check == "Notes":
-                params4 = {
-                    "type": "",
-                    "programId": f"{raw_text2}",
-                    "subjectId": f"{subject_idid}", 
-                    "chapterId": f"{teacher_idid}", 
-                    "topicId": f"{topic_id}",
-                    "page": "1",
-                    "subTopicId": f"{subtopic_id}",
-                }
                 response6 = requests.get(
                     f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
                 ).json()["data"]
@@ -923,15 +912,6 @@ async def account_login(bot: Client, m: Message):
                     url = a["baseUrl"] + a["key"]
                     to_write += f"{name}:{url}\n"	
             elif subtopic_name.startswith("Dpp's") and is_check == "Dpp's":
-                params4 = {
-                    "type": "",
-                    "programId": f"{raw_text2}",
-                    "subjectId": f"{subject_idid}", 
-                    "chapterId": f"{teacher_idid}", 
-                    "topicId": f"{topic_id}",
-                    "page": "1",
-                    "subTopicId": f"{subtopic_id}",
-                }
                 response6 = requests.get(
                     f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
                 ).json()["data"]
@@ -945,15 +925,6 @@ async def account_login(bot: Client, m: Message):
                     url = a["baseUrl"] + a["key"]
                     to_write += f"{name}:{url}\n"
             elif subtopic_name.startswith("Dpp's Sol") and is_check == "Dpp's Sol":
-                params4 = {
-                    "type": "",
-                    "programId": f"{raw_text2}",
-                    "subjectId": f"{subject_idid}", 
-                    "chapterId": f"{teacher_idid}", 
-                    "topicId": f"{topic_id}",
-                    "page": "1",
-                    "subTopicId": f"{subtopic_id}",
-                }
                 response6 = requests.get(
                     f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
                 ).json()["data"]
