@@ -843,7 +843,7 @@ async def account_login(bot: Client, m: Message):
     subject_idid = input2.text 
 	
     response3 = requests.get(
-        f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters", headers=headers, params=params2
+        f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters", headers=headers,
     ).json()["data"]
     bb = ""
     for data in response3:
