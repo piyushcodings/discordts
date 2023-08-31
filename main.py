@@ -858,8 +858,11 @@ async def account_login(bot: Client, m: Message):
     editable5 = await m.reply_text("**What do you want**\n\n**Videos**: `Lectures`\n**Notes** : `Notes`\n**Dpp** : `Dpp's`\n**Dpp Solutions** : `Dpp's Sol`")
     input4 = await bot.listen(editable.chat.id)
     is_check = input4.text
+    editable6 = await m.reply_text("Send me Page Number\n• In One Page it Upload 20 Topic.\n• If You Have More Than 20 Topic send Greater than 1\n\n`1`, `2`, `3`, `4`")
+    input5 = await bot.listen(editable.chat.id)
+    topic_page = input5.text
     params2 = {
-        "page": "",
+        "page": f"{topic_page}",
     }
     response4 = requests.get(
         f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics", headers=headers, params=params2
