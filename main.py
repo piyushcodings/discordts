@@ -858,15 +858,17 @@ async def account_login(bot: Client, m: Message):
     editable5 = await m.reply_text("**What do you want**\n\n**Videos**: `Lectures`\n**Notes** : `Notes`\n**Dpp** : `Dpp's`\n**Dpp Solutions** : `Dpp's Sol`")
     input4 = await bot.listen(editable.chat.id)
     is_check = input4.text
-
+    params2 = {
+        "page": "",
+    }
     response4 = requests.get(
-        f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics", headers=headers
+        f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics", headers=headers, params=params2
     ).json()["data"]
     to_write = ""
     for data2 in response4:
         topic_id = data2["_id"]
         response5 = requests.get(
-            f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics/{topic_id}/contents/sub-topic", headers=headers
+            f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics/{topic_id}/contents/sub-topic", headers=headers,
         ).json()["data"]     
         for data3 in response5:
             subtopic_name = data3["name"]
@@ -877,6 +879,7 @@ async def account_login(bot: Client, m: Message):
                 "subjectId": f"{subject_idid}", 
                 "chapterId": f"{teacher_idid}", 
                 "topicId": f"{topic_id}",
+                "page": "",
                 "subTopicId": f"{subtopic_id}",
 	    }
             if subtopic_name.startswith("Lectures") and is_check == "Lectures":
