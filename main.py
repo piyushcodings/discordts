@@ -525,7 +525,6 @@ async def info_login(bot: Client, m: Message):
     else:
         editable = await m.reply_text("Login Failed Check Response")
     b_data = resp.json()["data"]["totalBatches"]
-    await input1.delete(True)
     cool = ""
     for data in b_data:
         t_name =data['batchName']
@@ -547,10 +546,8 @@ async def info_login(bot: Client, m: Message):
     editable1 = await m.reply_text("**Now send the Batch ID to Download**")
     input2 = message = await bot.listen(editable.chat.id)
     raw_text2 = input2.text
-    await editable1.delete(True)
-    resp = s.get(f'https://api.classplusapp.com/v2/course/content/get?courseId={cr}&folderId={raw_text2}', headers=headers)
-    bdata = resp.json()['data']['courseContent']
-    cool = ""
+    bdata = s.get(f'https://api.classplusapp.com/v2/course/content/get?courseId={cr}&folderId={raw_text2}', headers=headers).json()['data']['courseContent']
+    folder_m = ""
     for data in bdata:
         id1 = data['id']
         nam2 =  data["name"]
@@ -558,21 +555,14 @@ async def info_login(bot: Client, m: Message):
         fid =  data["resources"]["files"]
         content =  data["contentType"]
         FFF = "**FOLDER-ID -FOLDER NAME -TOTAL VIDEOS/PDFS**"
-        aa = f" ```{id1}``` - **{nam2}  -{vid} -{fid}**\n\n"
-        if len(f'{cool}{aa}') > 4096:
-            cool = ""
-        cool += aa
-    await editable.edit(f'{"**You have these Folders :-**"}\n\n{FFF}\n\n{cool}')
-    await input2.delete(True)
+        folder_m += f" ```{id1}``` - **{nam2}  -{vid} -{fid}**\n\n"
+    await editable.edit(f'{"**You have these Folders :-**"}\n\n{FFF}\n\n{folder_m}')
     editable1 = await m.reply_text("**Now send the Folder ID to Download**")
     input3 = message = await bot.listen(editable.chat.id)
     raw_text3 = input3.text
-    await editable1.delete(True)
     respc = s.get(f'https://api.classplusapp.com/v2/course/content/get?courseId={cr}&folderId={raw_text3}', headers=headers).json()
-    ddata = respc['data']['courseContent']
-    
+    ddata = respc['data']['courseContent'] 
     if (respc["data"]["courseContent"][0]["contentType"]) ==1:
-        bdata = resp.json()['data']['courseContent']
         cool = ""
         for datas in ddata:
             id2 = datas['id']
@@ -580,24 +570,16 @@ async def info_login(bot: Client, m: Message):
             vid2 =  datas["resources"]["videos"]
             fid =  datas["resources"]["files"]
             content =  datas["contentType"]
-            print(id2,nam2,vid)
             FFF = "**FOLDER-ID -FOLDER NAME -TOTAL VIDEOS/PDFS**"
-            aa = f" ```{id2}``` - **{nam2} -{vid2}**\n\n"
-            if len(f'{cool}{aa}') > 4096:
-                cool = ""
-            cool += aa
+            cool += f" ```{id2}``` - **{nam2} -{vid2}**\n\n"
         await editable.edit(f'{"**You have these Folders :-**"}\n\n{FFF}\n\n{cool}')
-        await input2.delete(True)
         editable1 = await m.reply_text("**Now send the Folder ID to Download**")
         input4 = message = await bot.listen(editable.chat.id)
         raw_text4 = input4.text
-        await editable1.delete(True)
         resp = s.get(f'https://api.classplusapp.com/v2/course/content/get?courseId={cr}&folderId={raw_text4}', headers=headers)
-        #print(resp)
         bdat = resp.json()['data']['courseContent']
         bdat.reverse()
-        #print(bdat)
-        cool = ""
+        to_write = ""
         vj1 = ""
         for data in bdat:
             id1 = data['id']
@@ -605,26 +587,17 @@ async def info_login(bot: Client, m: Message):
             dis2 = data["description"]
             url2 = data["url"]
             content =  data["contentType"]
-            FFF = "**Topic-ID -Topic NAME **"
-            aa = f" ```{id2}``` - **{nam2}  -{dis2}**\n\n"
-            if len(f'{vj1}{aa}') > 4096:
-                #print(aa)
-                cool = ""
-            cool += aa
+            to_write += f" ```{id2}``` - **{nam2}  -{dis2}**\n"
             mm = "careerplus1"
             with open(f'{mm}.txt', 'a') as f:
-                    f.write(f"{nam2}-{dis2}:{url2}\n")
+                    f.write(f"{to_write}")
         await m.reply_document(f"{mm}.txt")
-        await input4.delete(True)
-        await editable.edit(f'{"**You have these Videos :-**"}\n\n{FFF}\n\n{cool}')
     else:
         ddata.reverse()
         cool = ""
-        vj = ""
-        
+        vj = ""        
         for data in ddata:
             id2 = str(data['id'])
-            #idid = f"{data['id']}&"
             nam2 =  data["name"]
             url2=  data["url"]
             des2=  data["description"]
@@ -637,15 +610,10 @@ async def info_login(bot: Client, m: Message):
                 #print(aa)
                 cool = ""
             cool += aa
-            
             mm = "classplus"
             with open(f'{mm}.txt', 'a') as f:
                     f.write(f"{nam2}-{des2}:{url2}\n")
         await m.reply_document(f"{mm}.txt")           
-        await editable.edit(f'{"**You have these Videos :-**"}\n\n{FFF}\n\n{cool}')
-        #await m.reply_document(f"{nam2}.txt")
-        await input3.delete(True)
-        await m.reply_text("**Now Press /cpd to Download **")
 
 
 #================ Physics Wallah Commands ===============#
