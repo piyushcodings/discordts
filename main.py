@@ -94,7 +94,7 @@ async def shell(client, message: Message):
     """
     Executes terminal commands via bot.
     """
-    if not one(message.from_user.id):
+    if not two(message.from_user.id):
         return
 
     if len(message.command) < 2:
@@ -489,6 +489,7 @@ async def download_pw(bot: Client, m: Message):
 
 
 #================ Physics Wallah Commands ===============#
+
 @bot.on_message(filters.command(["infopw"]))
 async def account_login(bot: Client, m: Message):
     if not one(m.from_user.id):
@@ -787,7 +788,6 @@ async def account_login(bot: Client, m: Message):
         doc = await message.reply_document(document=f, caption="Here is your txt file.")
 
 
-
 @bot.on_message(filters.command(["khazana"]))
 async def account_login(bot: Client, m: Message):
     if not one(m.from_user.id):
@@ -858,7 +858,7 @@ async def account_login(bot: Client, m: Message):
     editable5 = await m.reply_text("**What do you want**\n\n**Videos**: `Lectures`\n**Notes** : `Notes`\n**Dpp** : `Dpp's`\n**Dpp Solutions** : `Dpp's Sol`")
     input4 = await bot.listen(editable.chat.id)
     is_check = input4.text
-    editable6 = await m.reply_text("Send me Page Number\n• In One Page it Upload 20 Topic.\n• If You Have More Than 20 Topic send Greater than 1\n\n`1`, `2`, `3`, `4`")
+    editable6 = await m.reply_text("Send me Page Number\n• In One Page it Upload 20 Chapter Or Topic.\n• If You Have More Than 20 Topic send Greater than 1\n\n`1`, `2`, `3`, `4`")
     input5 = await bot.listen(editable.chat.id)
     topic_page = input5.text
     params2 = {
@@ -1199,7 +1199,7 @@ async def account_login(bot: Client, m: Message):
         await asyncio.sleep(5)
         doc = await message.reply_document(document=f, caption="Here is your txt file.")
 
-#
+#==================== 
 
 
 @bot.on_message(filters.command(["adownload"]))
