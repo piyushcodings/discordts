@@ -981,7 +981,7 @@ async def account_login(bot: Client, m: Message):
             teacher_name = data["name"] + data["description"]
             teacher_id = data["_id"]
             bb += f"**{teacher_name}** : ```{teacher_id}```\n\n"
-        await m.reply_text(bb)
+    await m.reply_text(bb)
     editable4 = await m.reply_text("**Send me Teacher Id**")
     input3 = await bot.listen(editable.chat.id)
     teacher_idid = input3.text
