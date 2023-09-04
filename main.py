@@ -989,98 +989,96 @@ async def account_login(bot: Client, m: Message):
     editable5 = await m.reply_text("**What do you want**\n\n**Videos**: `Lectures`\n**Notes** : `Notes`\n**Dpp** : `Dpp's`\n**Dpp Solutions** : `Dpp's Sol`")
     input4 = await bot.listen(editable.chat.id)
     is_check = input4.text
-    editable6 = await m.reply_text("Send me Page Number\n• In One Page it Upload 20 Chapter Or Topic.\n• If You Have More Than 20 Topic send Greater than 1\n\n`1`, `2`, `3`, `4`")
-    input5 = await bot.listen(editable.chat.id)
-    topic_page = input5.text
-    params2 = {
-        "page": f"{topic_page}",
-    }
-    response4 = requests.get(
-        f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics", headers=headers, params=params2
-    ).json()["data"]
     to_write = ""
-    for data2 in response4:
-        topic_id = data2["_id"]
-        response5 = requests.get(
-            f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics/{topic_id}/contents/sub-topic", headers=headers,
-        ).json()["data"]     
-        for data3 in response5:
-            subtopic_name = data3["name"]
-            subtopic_id = data3["_id"]
-            params4 = {
-                "type": "",
-                "programId": f"{raw_text2}",
-                "subjectId": f"{subject_idid}", 
-                "chapterId": f"{teacher_idid}", 
-                "topicId": f"{topic_id}",
-                "page": "",
-                "subTopicId": f"{subtopic_id}",
-	    }
-            if subtopic_name.startswith("Lectures") and is_check == "Lectures":
-                response6 = requests.get(
-                    f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
-                ).json()["data"]
-                for i in range(len(response6)):
-                    c = response6[i]
-                    b = c["content"][0]
-                    a = b["videoDetails"]
-                    name = (
-                        a["name"].replace("|", " ").replace(":", " ")
-                    )
-                    url = (
-                        a["videoUrl"]
-                        .replace("d1d34p8vz63oiq", "d26g5bnklkwsh4")
-                        .replace("mpd", "m3u8")
-                        .strip()
-                    )
-                    thumb_url = a["image"]
-                    to_write += f"{name}:{url}:{thumb_url}\n"
-            elif subtopic_name.startswith("Notes") and is_check == "Notes":
-                response6 = requests.get(
-                    f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
-                ).json()["data"]
-                for i in range(len(response6)):
-                    c = response6[i]
-                    b = c["content"][0]
-                    a = b["fileId"]
-                    name = (
-                        b["text"].replace("|", " ").replace(":", " ")
-                    )
-                    url = a["baseUrl"] + a["key"]
-                    to_write += f"{name}:{url}\n"	
-            elif subtopic_name.startswith("Dpp's") and is_check == "Dpp's":
-                response6 = requests.get(
-                    f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
-                ).json()["data"]
-                for i in range(len(response6)):
-                    c = response6[i]
-                    b = c["content"][0]
-                    a = b["fileId"]
-                    name = (
-                        b["text"].replace("|", " ").replace(":", " ")
-                    )
-                    url = a["baseUrl"] + a["key"]
-                    to_write += f"{name}:{url}\n"
-            elif subtopic_name.startswith("Dpp's Sol") and is_check == "Dpp's Sol":
-                response6 = requests.get(
-                    f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
-                ).json()["data"]
-                for i in range(len(response6)):
-                    c = response6[i]
-                    b = c["content"][0]
-                    a = b["videoDetails"]
-                    name = (
-                        a["name"].replace("|", " ").replace(":", " ")
-                    )
-                    url = (
-                        a["videoUrl"]
-                        .replace("d1d34p8vz63oiq", "d26g5bnklkwsh4")
-                        .replace("mpd", "m3u8")
-                        .strip()
-                    )
-                    thumb_url = a["image"]
-                    to_write += f"{name}:{url}:{thumb_url}\n"
-        asyncio.sleep(1)
+    for topic_page in range(1,3):
+        params2 = {
+            "page": f"{topic_page}",
+        }
+        response4 = requests.get(
+            f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics", headers=headers, params=params2
+        ).json()["data"]
+        for data2 in response4:
+            topic_id = data2["_id"]
+            response5 = requests.get(
+                f"https://api.penpencil.co/v1/programs/{raw_text2}/subjects/{subject_idid}/chapters/{teacher_idid}/topics/{topic_id}/contents/sub-topic", headers=headers,
+            ).json()["data"]     
+            for data3 in response5:
+                subtopic_name = data3["name"]
+                subtopic_id = data3["_id"]
+                params4 = {
+                    "type": "",
+                    "programId": f"{raw_text2}",
+                    "subjectId": f"{subject_idid}", 
+                    "chapterId": f"{teacher_idid}", 
+                    "topicId": f"{topic_id}",
+                    "page": "",
+                    "subTopicId": f"{subtopic_id}",
+	        }
+                if subtopic_name.startswith("Lectures") and is_check == "Lectures":
+                    response6 = requests.get(
+                        f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
+                    ).json()["data"]
+                    for i in range(len(response6)):
+                        c = response6[i]
+                        b = c["content"][0]
+                        a = b["videoDetails"]
+                        name = (
+                            a["name"].replace("|", " ").replace(":", " ")
+                        )
+                        url = (
+                            a["videoUrl"]
+                            .replace("d1d34p8vz63oiq", "d26g5bnklkwsh4")
+                            .replace("mpd", "m3u8")
+                            .strip()
+                        )
+                        thumb_url = a["image"]
+                        to_write += f"{name}:{url}:{thumb_url}\n"
+                elif subtopic_name.startswith("Notes") and is_check == "Notes":
+                    response6 = requests.get(
+                        f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
+                    ).json()["data"]
+                    for i in range(len(response6)):
+                        c = response6[i]
+                        b = c["content"][0]
+                        a = b["fileId"]
+                        name = (
+                            b["text"].replace("|", " ").replace(":", " ")
+                        )
+                        url = a["baseUrl"] + a["key"]
+                        to_write += f"{name}:{url}\n"	
+                elif subtopic_name.startswith("Dpp's") and is_check == "Dpp's":
+                    response6 = requests.get(
+                        f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
+                    ).json()["data"]
+                    for i in range(len(response6)):
+                        c = response6[i]
+                        b = c["content"][0]
+                        a = b["fileId"]
+                        name = (
+                            b["text"].replace("|", " ").replace(":", " ")
+                        )
+                        url = a["baseUrl"] + a["key"]
+                        to_write += f"{name}:{url}\n"
+                elif subtopic_name.startswith("Dpp's Sol") and is_check == "Dpp's Sol":
+                    response6 = requests.get(
+                        f"https://api.penpencil.co/v2/programs/contents", headers=headers, params=params4
+                    ).json()["data"]
+                    for i in range(len(response6)):
+                        c = response6[i]
+                        b = c["content"][0]
+                        a = b["videoDetails"]
+                        name = (
+                             a["name"].replace("|", " ").replace(":", " ")
+                        )
+                        url = (
+                            a["videoUrl"]
+                            .replace("d1d34p8vz63oiq", "d26g5bnklkwsh4")
+                            .replace("mpd", "m3u8")
+                            .strip()
+                        )
+                        thumb_url = a["image"]
+                        to_write += f"{name}:{url}:{thumb_url}\n"
+            asyncio.sleep(1)
     with open(f"{teacher_idid}.txt", "w", encoding="utf-8") as f:
         f.write(to_write)
         print(1)
