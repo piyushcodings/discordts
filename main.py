@@ -488,7 +488,7 @@ async def download_pw(bot: Client, m: Message):
     await m.reply_text("Done")
 
 #================ Class Plus =================#
-@bot.on_message(filters.command(["infopw"]))
+@bot.on_message(filters.command(["cp"]))
 async def info_login(bot: Client, m: Message):
     if not one(m.from_user.id):
         return await m.reply_text(
