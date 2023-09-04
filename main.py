@@ -969,6 +969,7 @@ async def account_login(bot: Client, m: Message):
     editable3 = await m.reply_text("**Send me Subject Id**")
     input2 = await bot.listen(editable.chat.id)
     subject_idid = input2.text 
+    bb = ""
     for owo in range(1, 4):
         params_teach = {
             "page": f"{owo}",
@@ -976,7 +977,6 @@ async def account_login(bot: Client, m: Message):
         response3 = requests.get(
             f"https://api.penpencil.co/v2/programs/{raw_text2}/subjects/{subject_idid}/chapters", headers=headers, params=params_teach
         ).json()["data"]
-        bb = ""
         for data in response3:
             teacher_name = data["name"] + data["description"]
             teacher_id = data["_id"]
