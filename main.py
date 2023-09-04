@@ -525,12 +525,12 @@ async def info_login(bot: Client, m: Message):
     else:
         editable = await m.reply_text("Login Failed Check Response")
     b_data = resp.json()["data"]["totalBatches"]
+    print(b_data)
     cool = ""
     for data in b_data:
         t_name =data['batchName']
         t_id =data['batchId']
         cool += f" **{t_name}** - ```{t_id}``` \n\n"
-        # aa=f"**Batch Name -** {data['batchName']}\n**Batch ID -** ```{data['id']}```\n**By -** {data['instructorName']}\n\n"
     await editable.edit(f'{"**You have these batches :-**"}\n\n{cool}')
     editable1 = await m.reply_text("**Now send the Batch ID to Download**")
     input2 = message = await bot.listen(editable.chat.id)
