@@ -487,7 +487,7 @@ async def download_pw(bot: Client, m: Message):
         return await m.reply_text(f"Overall Error : {e}")
     await m.reply_text("Done")
 
-"""
+
 #================ Class Plus =================#
 @bot.on_message(filters.command(["cp"]))
 async def info_login(bot: Client, m: Message):
@@ -1086,7 +1086,7 @@ async def account_login(bot: Client, m: Message):
     with open(f"{teacher_idid}.txt", "rb") as f:
         await asyncio.sleep(5)
         doc = await m.reply_document(document=f, caption="Here is your txt file.")
-"""
+
 # =============== Apni Kaksha =================     #                
 
 @bot.on_message(filters.command(["apni"]))
