@@ -449,8 +449,8 @@ async def download_pw(bot: Client, m: Message):
             try:
                 Show = f"**Downloading:-**\n\n**Name :-** `{name}\nQuality - {raw_text2}`\n\n**Url :-** `{url}`\n**Thumb :-** `{old_thumb}`"
                 prog = await m.reply_text(Show)
-                cc = f"**➭ 𝗧𝗶𝘁𝗹𝗲 »** {name1} {res}.mkv\n**➭ Batch »** {raw_text0}\n**➭ Index »** {str(count).zfill(3)}\n➭ 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆 » [LegendBoy](https://t.me/LegendBot_Owner)"
-                cc1 = f"**➭ 𝗧𝗶𝘁𝗹𝗲 »** {name1} {res}.pdf\n**➭ Batch »** {raw_text0}\n**➭ Index »** {str(count).zfill(3)}\n➭ 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆 » [LegendBoy](https://t.me/LegendBot_Owner)"
+                cc = f"**➭ 𝗧𝗶𝘁𝗹𝗲 »** {name1} {res}.mkv\n**➭ Batch »** {raw_text0}\n**➭ Index »** {str(count).zfill(3)}\n➭ 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆 » [MANO](https://t.me/Im_mano06)"
+                cc1 = f"**➭ 𝗧𝗶𝘁𝗹𝗲 »** {name1} {res}.pdf\n**➭ Batch »** {raw_text0}\n**➭ Index »** {str(count).zfill(3)}\n➭ 𝗗𝗼𝘄𝗻𝗹𝗼𝗮𝗱𝗲𝗱 𝗕𝘆 » [MANO](https://t.me/Im_mano06)"
                 if cmd == "pdf" or ".pdf" in str(url) or ".pdf" in name:
                     print("PDF")
                     try:
